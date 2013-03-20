@@ -530,7 +530,18 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         offset = [self limitOffset:offset forOrientation:orientation];
     _offset = offset;
     _offsetOrientation = orientation;
-    self.slidingControllerView.frame = [self slidingRectForOffset:_offset forOrientation:orientation];
+    
+    CGRect slidingFrame = [self slidingRectForOffset:_offset forOrientation:orientation];
+    
+    // TODO: replace `true` with a BOOL property
+    // Something like preventPanningLeft
+    // This prevents the user panning to display the right menu
+    if (panning && [self isSideClosed:IIViewDeckRightSide] && true) {
+        slidingFrame.origin.x = MAX(0, slidingFrame.origin.x);
+    }
+    
+    self.slidingControllerView.frame = slidingFrame;
+    
     if (beforeOffset != _offset)
         [self notifyDidChangeOffset:_offset orientation:orientation panning:panning];
     
