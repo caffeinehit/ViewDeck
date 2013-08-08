@@ -302,6 +302,9 @@ typedef void (^IIViewDeckControllerBounceBlock) (IIViewDeckController *controlle
 
 - (CGFloat)viewDeckController:(IIViewDeckController*)viewDeckController changesLedge:(CGFloat)ledge forSide:(IIViewDeckSide)viewDeckSide;
 
+- (void)viewDeckControllerDidStartPanning:(IIViewDeckController *)viewDeckController;
+- (void)viewDeckControllerDidStopPanning:(IIViewDeckController *)viewDeckController;
+
 @end
 
 

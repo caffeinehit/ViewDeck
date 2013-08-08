@@ -2265,6 +2265,12 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 - (void)panned:(UIPanGestureRecognizer*)panner {
     if (!_enabled) return;
     
+    if (panner.state == UIGestureRecognizerStateBegan) {
+        if ([self.delegate respondsToSelector:@selector(viewDeckControllerDidStartPanning:)]) {
+            [self.delegate viewDeckControllerDidStartPanning:self];
+        }
+    }
+    
     if (_offset == 0 && panner.state == UIGestureRecognizerStateBegan) {
         CGPoint velocity = [panner velocityInView:self.referenceView];
         if (ABS(velocity.x) >= ABS(velocity.y))
@@ -2274,6 +2280,12 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     }
     else {
         [self panned:panner orientation:_offsetOrientation];
+    }
+    
+    if (panner.state == UIGestureRecognizerStateCancelled || panner.state == UIGestureRecognizerStateEnded || panner.state == UIGestureRecognizerStateFailed) {
+        if ([self.delegate respondsToSelector:@selector(viewDeckControllerDidStopPanning:)]) {
+            [self.delegate viewDeckControllerDidStopPanning:self];
+        }
     }
 }
 
