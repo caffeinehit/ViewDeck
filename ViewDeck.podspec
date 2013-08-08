@@ -5,6 +5,7 @@ Pod::Spec.new do |s|
   s.summary   = 'An implementation of the sliding functionality found in the ' \
                 'Path 2.0 or Facebook iOS apps.'
   s.homepage  = 'https://github.com/Inferis/ViewDeck'
+  s.requires_arc = true
   s.license   = {
     :type => 'MIT',
     :text => <<-LICENSE
